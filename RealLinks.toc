@@ -1,0 +1,7 @@
+## Interface: 40000
+## Author: p3lim
+## Version: Alpha
+## Title: RealLinks
+## Notes: Colors links in Battle.net whispers
+
+RealLinks.lua
