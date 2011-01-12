@@ -31,7 +31,7 @@ local function GetLinkColor(data)
 end
 
 local function AddLinkColors(self, event, msg, ...)
-	local data = string.match(msg, '|H(.-)|h%[(.-)%]|h')
+	local data = string.match(msg, '|H(.-)|h(.-)|h')
 	if(data) then
 		return false, msg:gsub('|H(.-)|h(.-)|h', GetLinkColor(data) .. '|H%1|h%2|h|r'), ...
 	else
