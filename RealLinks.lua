@@ -4,7 +4,7 @@ local function GetLinkColor(data)
 		local _, _, quality = GetItemInfo(id)
 		if(quality) then
 			local _, _, _, hex = GetItemQualityColor(quality)
-			return hex
+			return '|c' .. hex
 		else
 			-- Item is not cached yet, show a white color instead
 			-- Would like to fix this somehow
