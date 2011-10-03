@@ -1,6 +1,6 @@
-## Interface: 40000
+## Interface: 40200
 ## Author: p3lim
-## Version: 40000.1-Beta
+## Version: 40200.2-Beta
 ## Title: RealLinks
 ## Notes: Colors links in Battle.net whispers
 
