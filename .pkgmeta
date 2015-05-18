@@ -1,0 +1,4 @@
+package-as: RealLinks
+
+ignore:
+    - CONTRIBUTING.md
