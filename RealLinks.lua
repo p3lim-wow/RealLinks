@@ -15,7 +15,11 @@ local function GetLinkColor(data)
 			return nil, true
 		end
 	elseif(type == 'quest') then
-		return ConvertRGBtoColorString(GetQuestDifficultyColor(arg2))
+		if(arg2) then
+			return ConvertRGBtoColorString(GetQuestDifficultyColor(arg2))
+		else
+			return '|cffffd100'
+		end
 	elseif(type == 'spell') then
 		return '|cff71d5ff'
 	elseif(type == 'achievement') then
