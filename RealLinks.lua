@@ -1,4 +1,6 @@
 local split = string.split
+local gmatch = string.gmatch
+local gsub = string.gsub
 
 local function GetLinkColor(data)
 	local type, arg1, arg2 = split(':', data)
@@ -32,15 +34,17 @@ local function GetLinkColor(data)
 	end
 end
 
-local function AddLinkColors(self, event, msg, ...)
-	local data = string.match(msg, '|H(.-)|h(.-)|h')
-	if(data) then
-		local newmsg = string.gsub(msg, '|H(.-)|h(.-)|h', GetLinkColor(data) .. '|H%1|h%2|h|r')
-		return false, newmsg, ...
-	else
-		return false, msg, ...
+local function MessageFilter(self, event, message, ...)
+	for link, data in gmatch(message, '(|H(.-)|h.-|h)') do
+		local color = GetLinkColor(data)
+		if(color) then
+			local matchLink = '|H' .. data .. '|h.-|h'
+			message = gsub(message, matchLink, color .. link .. '|r', 1)
+		end
 	end
+
+	return false, message, ...
 end
 
-ChatFrame_AddMessageEventFilter('CHAT_MSG_BN_WHISPER', AddLinkColors)
-ChatFrame_AddMessageEventFilter('CHAT_MSG_BN_WHISPER_INFORM', AddLinkColors)
+ChatFrame_AddMessageEventFilter('CHAT_MSG_BN_WHISPER', MessageFilter)
+ChatFrame_AddMessageEventFilter('CHAT_MSG_BN_WHISPER_INFORM', MessageFilter)
