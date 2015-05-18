@@ -1,3 +1,13 @@
+### Changed in 60100.5-Beta:
+
+- Added: Support for currency, battlepet and garrison links
+- Added: License
+- Added: Metadata file for the curseforge packager
+- Changed: Update Interface version
+- Fixed: Item links not showing correct color
+- Fixed: Issues when a message contains multiple links
+- Fixed: Quest link coloring
+
 ### Changed in 40300.4-Beta:
 
 - Added: Support for journal links
