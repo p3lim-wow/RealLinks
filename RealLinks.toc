@@ -1,4 +1,4 @@
-## Interface: 40300
+## Interface: 60100
 ## Author: p3lim
 ## Version: 40300.4-Beta
 ## Title: RealLinks
