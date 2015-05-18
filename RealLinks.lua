@@ -1,7 +1,9 @@
+local split = string.split
+
 local function GetLinkColor(data)
-	local type, id, arg1 = string.match(data, '(%w+):(%d+)')
+	local type, arg1, arg2 = split(':', data)
 	if(type == 'item') then
-		local _, _, quality = GetItemInfo(id)
+		local _, _, quality = GetItemInfo(arg1)
 		if(quality) then
 			local _, _, _, hex = GetItemQualityColor(quality)
 			return '|c' .. hex
@@ -11,8 +13,7 @@ local function GetLinkColor(data)
 			return '|cffffffff'
 		end
 	elseif(type == 'quest') then
-		local _, _, level = string.match(data, '(%w+):(%d+):(%d+)')
-		local color = GetQuestDifficultyColor(level)
+		local color = GetQuestDifficultyColor(arg2)
 		return format('|cff%02x%02x%02x', color.r * 255, color.g * 255, color.b * 255)
 	elseif(type == 'spell') then
 		return '|cff71d5ff'
