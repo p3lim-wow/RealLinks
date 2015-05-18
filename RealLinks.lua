@@ -61,7 +61,7 @@ local function MessageFilter(self, event, message, ...)
 		if(queue) then
 			table.insert(queuedMessages, {self, event, message, ...})
 			return true
-		if(color) then
+		elseif(color) then
 			local matchLink = '|H' .. data .. '|h.-|h'
 			message = gsub(message, matchLink, color .. link .. '|r', 1)
 		end
