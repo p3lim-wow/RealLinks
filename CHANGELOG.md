@@ -1,3 +1,7 @@
+### Changed in 60100.6-Beta:
+
+- Fixed: Syntax error
+
 ### Changed in 60100.5-Beta:
 
 - Added: Support for currency, battlepet and garrison links
