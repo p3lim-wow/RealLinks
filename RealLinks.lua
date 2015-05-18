@@ -1,3 +1,5 @@
+local queuedMessages = {}
+
 local split = string.split
 local gmatch = string.gmatch
 local gsub = string.gsub
@@ -7,12 +9,10 @@ local function GetLinkColor(data)
 	if(type == 'item') then
 		local _, _, quality = GetItemInfo(arg1)
 		if(quality) then
-			local _, _, _, hex = GetItemQualityColor(quality)
-			return '|c' .. hex
+			local _, _, _, color = GetItemQualityColor(quality)
+			return '|c' .. color
 		else
-			-- Item is not cached yet, show a white color instead
-			-- Would like to fix this somehow
-			return '|cffffffff'
+			return nil, true
 		end
 	elseif(type == 'quest') then
 		local color = GetQuestDifficultyColor(arg2)
@@ -36,7 +36,10 @@ end
 
 local function MessageFilter(self, event, message, ...)
 	for link, data in gmatch(message, '(|H(.-)|h.-|h)') do
-		local color = GetLinkColor(data)
+		local color, queue = GetLinkColor(data)
+		if(queue) then
+			table.insert(queuedMessages, {self, event, message, ...})
+			return true
 		if(color) then
 			local matchLink = '|H' .. data .. '|h.-|h'
 			message = gsub(message, matchLink, color .. link .. '|r', 1)
@@ -45,6 +48,17 @@ local function MessageFilter(self, event, message, ...)
 
 	return false, message, ...
 end
+
+local Handler = CreateFrame('Frame')
+Handler:RegisterEvent('GET_ITEM_INFO_RECEIVED')
+Handler:SetScript('OnEvent', function()
+	if(#queuedMessages > 0) then
+		for index, data in next, queuedMessages do
+			ChatFrame_MessageEventHandler(unpack(data))
+			queuedMessages[index] = nil
+		end
+	end
+end)
 
 ChatFrame_AddMessageEventFilter('CHAT_MSG_BN_WHISPER', MessageFilter)
 ChatFrame_AddMessageEventFilter('CHAT_MSG_BN_WHISPER_INFORM', MessageFilter)
