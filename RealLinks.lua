@@ -3,9 +3,10 @@ local queuedMessages = {}
 local split = string.split
 local gmatch = string.gmatch
 local gsub = string.gsub
+local sub = string.sub
 
 local function GetLinkColor(data)
-	local type, arg1, arg2 = split(':', data)
+	local type, arg1, arg2, arg3 = split(':', data)
 	if(type == 'item') then
 		local _, _, quality = GetItemInfo(arg1)
 		if(quality) then
@@ -20,9 +21,26 @@ local function GetLinkColor(data)
 		else
 			return '|cffffd100'
 		end
+	elseif(type == 'currency') then
+		local link = GetCurrencyLink(arg1)
+		if(link) then
+			return sub(link, 0, 10)
+		else
+			return '|cffffffff'
+		end
+	elseif(type == 'battlepet') then
+		if(arg3 ~= -1) then
+			local _, _, _, color = GetItemQualityColor(arg3)
+			return '|c' .. color
+		else
+			return '|cffffd200'
+		end
+	elseif(type == 'garrfollower') then
+		local _, _, _, color = GetItemQualityColor(arg2)
+		return '|c' .. color
 	elseif(type == 'spell') then
 		return '|cff71d5ff'
-	elseif(type == 'achievement') then
+	elseif(type == 'achievement' or type == 'garrmission') then
 		return '|cffffff00'
 	elseif(type == 'trade' or type == 'enchant') then
 		return '|cffffd000'
@@ -30,10 +48,10 @@ local function GetLinkColor(data)
 		return '|cffff8000'
 	elseif(type == 'glyph' or type == 'journal') then
 		return '|cff66bbff'
-	elseif(type == 'talent') then
+	elseif(type == 'talent' or type == 'battlePetAbil' or type == 'garrfollowerability') then
 		return '|cff4e96f7'
 	elseif(type == 'levelup') then
-		return '|cffFF4E00'
+		return '|cffff4e00'
 	end
 end
 
