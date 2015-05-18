@@ -15,8 +15,7 @@ local function GetLinkColor(data)
 			return nil, true
 		end
 	elseif(type == 'quest') then
-		local color = GetQuestDifficultyColor(arg2)
-		return format('|cff%02x%02x%02x', color.r * 255, color.g * 255, color.b * 255)
+		return ConvertRGBtoColorString(GetQuestDifficultyColor(arg2))
 	elseif(type == 'spell') then
 		return '|cff71d5ff'
 	elseif(type == 'achievement') then
